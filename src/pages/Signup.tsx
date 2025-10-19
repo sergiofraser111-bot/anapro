@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { Wallet, Shield, CheckCircle, Zap } from 'lucide-react';
+import { Wallet, Shield, CheckCircle, Zap, ArrowLeft } from 'lucide-react';
 import { getUserProfile } from '../services/api';
 
 export default function Signup() {
@@ -99,6 +99,15 @@ export default function Signup() {
     <div className="min-h-screen pt-20 bg-slate-50 flex items-center justify-center">
       <div className="container-custom py-20">
         <div className="max-w-lg mx-auto">
+          {/* Back to Home Button */}
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 font-medium mb-6 transition-colors group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to Home
+          </Link>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
