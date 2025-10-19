@@ -133,11 +133,11 @@ export default function Signup() {
             {!connected ? (
               <>
                 <div className="flex justify-center mb-6">
-                  <WalletMultiButton className="!bg-slate-900 hover:!bg-slate-800 !text-white !py-4 !px-8 !rounded-lg !font-semibold !transition-colors !text-base" />
+                  <WalletMultiButton className="!bg-slate-900 hover:!bg-slate-800 !text-white !py-4 !px-8 !rounded-lg !font-semibold !transition-colors !text-base !w-full sm:!w-auto !text-center" />
                 </div>
 
                 <p className="text-center text-xs text-slate-500 mb-8">
-                  Supports Phantom, Solflare, Backpack, Ledger, and all Solana wallets
+                  Supports Phantom, Solflare, Backpack, and all Solana wallets
                 </p>
 
                 {/* Benefits */}

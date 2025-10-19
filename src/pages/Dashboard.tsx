@@ -22,6 +22,7 @@ import { getTotalBalance } from '../services/platformBalance';
 import { getUserInvestments } from '../services/api';
 import DepositModal from '../components/DepositModal';
 import WithdrawModal from '../components/WithdrawModal';
+import { usePullToRefresh } from '../hooks/usePullToRefresh';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -37,6 +38,14 @@ export default function Dashboard() {
   const [isLoadingBalances, setIsLoadingBalances] = useState<boolean>(false);
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
+
+  // Pull-to-refresh on mobile
+  const { isRefreshing, pullDistance } = usePullToRefresh({
+    onRefresh: async () => {
+      await fetchBalances();
+    },
+    enabled: true
+  });
 
   useEffect(() => {
     // Check if user is authenticated
@@ -128,6 +137,21 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      {/* Pull-to-Refresh Indicator */}
+      {pullDistance > 0 && (
+        <div
+          className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-center bg-slate-900/90 text-white"
+          style={{ height: `${Math.min(pullDistance, 80)}px` }}
+        >
+          <div className="flex items-center gap-2">
+            <RefreshCw className={`w-5 h-5 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <span className="text-sm font-medium">
+              {isRefreshing ? 'Refreshing...' : pullDistance >= 80 ? 'Release to refresh' : 'Pull to refresh'}
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Top Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200">
         <div className="flex items-center justify-between h-16 px-6">
