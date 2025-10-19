@@ -1,0 +1,423 @@
+/* 2025 Premium Design System - Inter Font Family */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    letter-spacing: -0.02em;
+  }
+
+  h1 { @apply text-5xl md:text-6xl lg:text-7xl; }
+  h2 { @apply text-4xl md:text-5xl; }
+  h3 { @apply text-3xl md:text-4xl; }
+}
+
+/* ===== 2025 GLASSMORPHISM COMPONENTS ===== */
+@layer components {
+  /* Premium Glass Card - Inspired by iOS/macOS design */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+      0 8px 32px rgba(31, 38, 135, 0.12),
+      0 2px 8px rgba(0, 0, 0, 0.04);
+    @apply rounded-2xl;
+  }
+
+  .glass-card-dark {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.2);
+    @apply rounded-2xl;
+  }
+
+  /* Elevated Card with Premium Shadow */
+  .elevated-card {
+    @apply bg-white border border-slate-200/50 rounded-2xl transition-all duration-300;
+    box-shadow:
+      0 1px 3px rgba(15, 23, 42, 0.03),
+      0 1px 2px rgba(15, 23, 42, 0.02);
+  }
+
+  .elevated-card:hover {
+    @apply border-slate-300 -translate-y-1;
+    box-shadow:
+      0 20px 25px -5px rgba(15, 23, 42, 0.08),
+      0 10px 10px -5px rgba(15, 23, 42, 0.04);
+  }
+
+  /* ===== PREMIUM BUTTON SYSTEM ===== */
+
+  /* Primary Button with Shimmer Effect */
+  .btn-primary {
+    @apply px-7 py-4 rounded-xl font-semibold text-white relative overflow-hidden;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    box-shadow:
+      0 4px 14px 0 rgba(2, 132, 199, 0.25),
+      0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.7s;
+  }
+
+  .btn-primary:hover {
+    @apply -translate-y-0.5;
+    box-shadow:
+      0 8px 20px 0 rgba(2, 132, 199, 0.35),
+      0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn-primary:hover::before {
+    transform: translateX(100%);
+  }
+
+  .btn-primary:active {
+    @apply translate-y-0;
+  }
+
+  /* Secondary Button */
+  .btn-secondary {
+    @apply px-7 py-4 rounded-xl font-semibold text-slate-900 bg-white border-2 border-slate-200;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .btn-secondary:hover {
+    @apply border-slate-900 -translate-y-0.5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Accent Button (Gold/Yellow) */
+  .btn-accent {
+    @apply px-7 py-4 rounded-xl font-semibold text-slate-900 relative overflow-hidden;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    box-shadow:
+      0 4px 14px 0 rgba(251, 191, 36, 0.35),
+      0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-accent:hover {
+    @apply -translate-y-0.5;
+    box-shadow:
+      0 8px 20px 0 rgba(251, 191, 36, 0.45),
+      0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  /* ===== GRADIENT BACKGROUNDS ===== */
+
+  /* Mesh Gradient Background */
+  .gradient-mesh {
+    background:
+      radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
+      radial-gradient(at 50% 0%, rgba(250, 204, 21, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.12) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+  }
+
+  /* Hero Gradient */
+  .hero-gradient {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    position: relative;
+  }
+
+  .hero-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 30%, rgba(250, 204, 21, 0.1) 0%, transparent 50%);
+    animation: pulse 8s ease-in-out infinite;
+  }
+
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #0284c7, #06b6d4, #0ea5e9);
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #fbbf24, #f59e0b, #eab308);
+  }
+
+  /* ===== LAYOUT UTILITIES ===== */
+
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ===== LOADING SKELETON ===== */
+
+  .skeleton {
+    @apply relative overflow-hidden rounded-lg;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* ===== CARD HOVER EFFECTS ===== */
+
+  .hover-lift {
+    @apply transition-all duration-300;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-2;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  /* ===== TRADING TERMINAL AESTHETICS ===== */
+
+  .terminal-card {
+    @apply bg-slate-900 border border-slate-700/50 rounded-xl;
+    box-shadow:
+      0 0 20px rgba(14, 165, 233, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .terminal-text {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== FLOATING ANIMATION ===== */
+
+  .floating {
+    animation: floating 3s ease-in-out infinite;
+  }
+
+  @keyframes floating {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* ===== PREMIUM INPUT FIELDS ===== */
+
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-slate-200 rounded-xl;
+    @apply focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10;
+    @apply transition-all duration-200 outline-none;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+  }
+
+  .input-field:hover {
+    @apply border-slate-300;
+  }
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+@layer utilities {
+  .scroll-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Pulse Animation */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+}
+
+/* ===== SMOOTH SCROLLING ===== */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Transparent scrollbar for sidebar */
+.scrollbar-transparent {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollbar-transparent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-transparent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-transparent::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+.scrollbar-transparent::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.2);
+}
+
+/* ===== REACT DATEPICKER PREMIUM STYLES ===== */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker {
+  font-family: 'Inter', sans-serif;
+  border: 2px solid #e2e8f0;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.react-datepicker__header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-bottom: none;
+  padding: 1.25rem;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker__day-name {
+  color: #fbbf24;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+.react-datepicker__day {
+  color: #0f172a;
+  border-radius: 0.5rem;
+  margin: 0.25rem;
+  transition: all 0.2s;
+}
+
+.react-datepicker__day:hover {
+  background-color: #fbbf24;
+  color: #0f172a;
+  transform: scale(1.05);
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.react-datepicker__day--disabled {
+  color: #cbd5e1;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.react-datepicker__day--disabled:hover {
+  background-color: transparent;
+  transform: none;
+}
+
+.react-datepicker__navigation {
+  top: 1.5rem;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: #fbbf24;
+}
+
+.react-datepicker__month-dropdown,
+.react-datepicker__year-dropdown {
+  background-color: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.75rem;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.react-datepicker__month-option,
+.react-datepicker__year-option {
+  padding: 0.75rem 1rem;
+  transition: all 0.2s;
+}
+
+.react-datepicker__month-option:hover,
+.react-datepicker__year-option:hover {
+  background-color: #fef3c7;
+}
+
+.react-datepicker__month-option--selected,
+.react-datepicker__year-option--selected {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* ===== SELECTION STYLES ===== */
+::selection {
+  background-color: rgba(14, 165, 233, 0.2);
+  color: #0f172a;
+}
+
+::-moz-selection {
+  background-color: rgba(14, 165, 233, 0.2);
+  color: #0f172a;
+}
