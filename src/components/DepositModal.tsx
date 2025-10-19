@@ -105,7 +105,7 @@ export default function DepositModal({ isOpen, onClose, onSuccess }: DepositModa
     setError('');
 
     try {
-      const SOLANA_RPC = import.meta.env.VITE_SOLANA_RPC_URL || 'https://mainnet.helius-rpc.com/?api-key=bcc3a86e-0c0f-4111-a3b2-71f1d968466f';
+      const SOLANA_RPC = import.meta.env.VITE_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com';
       const connection = new Connection(SOLANA_RPC, 'confirmed');
       const platformWallet = new PublicKey(PLATFORM_WALLET);
 
