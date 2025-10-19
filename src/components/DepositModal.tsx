@@ -210,14 +210,23 @@ export default function DepositModal({ isOpen, onClose, onSuccess }: DepositModa
 
       setTxSignature(signature);
 
+      // Get user profile to get user_id for transaction record
+      const { data: userProfile } = await getUserProfile(publicKey.toString());
+
+      if (!userProfile) {
+        console.error('User profile not found');
+        throw new Error('User profile not found. Please complete your profile first.');
+      }
+
       // Save transaction to database
       const { error: dbError } = await createTransaction({
-        walletAddress: publicKey.toString(),
+        user_id: userProfile.id,
+        wallet_address: publicKey.toString(),
         type: 'deposit',
         amount: parseFloat(amount),
         currency: selectedToken,
         status: 'completed',
-        txHash: signature,
+        transaction_hash: signature,
       });
 
       if (dbError) {
@@ -231,13 +240,8 @@ export default function DepositModal({ isOpen, onClose, onSuccess }: DepositModa
       const { data: existingBalance } = await getPlatformBalance(publicKey.toString());
 
       if (!existingBalance) {
-        // Get user profile to get user_id
-        const { data: profile } = await getUserProfile(publicKey.toString());
-
-        if (profile) {
-          console.log('Initializing platform balance for user:', profile.id);
-          await initializePlatformBalance(publicKey.toString(), profile.id);
-        }
+        console.log('Initializing platform balance for user:', userProfile.id);
+        await initializePlatformBalance(publicKey.toString(), userProfile.id);
       }
 
       // Credit the deposit

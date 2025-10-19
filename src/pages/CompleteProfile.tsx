@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { User, Mail, Calendar, ArrowRight, Search, AlertCircle } from 'lucide-react';
-import { countries, getCountryByPhoneCode, getCountryByCode, getFlagUrl } from '../data/countries';
+import { countries, getCountryByCode, getFlagUrl } from '../data/countries';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { createUserProfile } from '../services/api';
@@ -114,7 +114,7 @@ export default function CompleteProfile() {
     const walletAddress = publicKey?.toString() || '';
 
     // Save to backend database (Supabase)
-    const { data: savedProfile, error: saveError } = await createUserProfile({
+    const { error: saveError } = await createUserProfile({
       wallet_address: walletAddress,
       username: formData.username,
       display_name: formData.displayName,

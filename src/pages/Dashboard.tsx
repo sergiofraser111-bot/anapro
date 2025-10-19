@@ -20,7 +20,6 @@ import { getAllBalances, getBalancesInUSD } from '../services/solana';
 import type { TokenBalance } from '../services/solana';
 import { getTotalBalance } from '../services/platformBalance';
 import { getUserInvestments } from '../services/api';
-import type { Investment } from '../lib/supabase';
 import DepositModal from '../components/DepositModal';
 import WithdrawModal from '../components/WithdrawModal';
 
@@ -33,7 +32,6 @@ export default function Dashboard() {
   const [balances, setBalances] = useState<TokenBalance>({ sol: 0, usdc: 0, usdt: 0 });
   const [totalUSD, setTotalUSD] = useState<number>(0);
   const [platformBalance, setPlatformBalance] = useState<any>(null);
-  const [investments, setInvestments] = useState<Investment[]>([]);
   const [activeInvestmentsCount, setActiveInvestmentsCount] = useState<number>(0);
   const [activeInvestmentsValue, setActiveInvestmentsValue] = useState<number>(0);
   const [isLoadingBalances, setIsLoadingBalances] = useState<boolean>(false);
@@ -86,7 +84,6 @@ export default function Dashboard() {
       // Fetch user investments
       const { data: investmentsData } = await getUserInvestments(walletAddress);
       if (investmentsData) {
-        setInvestments(investmentsData);
 
         // Calculate active investments count and total value
         const activeInvestments = investmentsData.filter(inv => inv.status === 'active');
@@ -96,7 +93,6 @@ export default function Dashboard() {
         const totalValue = activeInvestments.reduce((sum, inv) => sum + inv.amount, 0);
         setActiveInvestmentsValue(totalValue);
       } else {
-        setInvestments([]);
         setActiveInvestmentsCount(0);
         setActiveInvestmentsValue(0);
       }

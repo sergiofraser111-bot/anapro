@@ -25,7 +25,6 @@ import {
   Globe,
   Copy,
   ExternalLink,
-  Settings,
 } from 'lucide-react';
 import { getUserProfile, updateUserProfile } from '../services/api';
 
@@ -78,7 +77,7 @@ export default function Profile() {
     if (!publicKey) return;
 
     try {
-      const { data, error } = await getUserProfile(publicKey.toString());
+      const { data } = await getUserProfile(publicKey.toString());
       if (data) {
         setProfileData(data);
         setEditedData(data);
@@ -128,7 +127,7 @@ export default function Profile() {
 
     setIsSaving(true);
     try {
-      const { data, error } = await updateUserProfile(publicKey.toString(), editedData);
+      const { error } = await updateUserProfile(publicKey.toString(), editedData);
 
       if (error) {
         throw new Error(error);

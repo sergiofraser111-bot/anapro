@@ -9,8 +9,6 @@ import {
   Smartphone,
   Globe,
   Zap,
-  TrendingUp,
-  Shield,
   Clock
 } from 'lucide-react';
 import { getTop3Traders, getLastUpdateTime, type Trader } from '../utils/traders';

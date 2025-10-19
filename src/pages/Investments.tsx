@@ -20,7 +20,6 @@ import {
   XCircle,
   AlertCircle,
   LineChart,
-  TrendingDown,
 } from 'lucide-react';
 import { getUserInvestments, updateInvestment } from '../services/api';
 
@@ -74,7 +73,7 @@ export default function Investments() {
 
     setIsLoading(true);
     try {
-      const { data, error } = await getUserInvestments(publicKey.toString());
+      const { data } = await getUserInvestments(publicKey.toString());
       if (data) {
         setInvestments(data);
       }

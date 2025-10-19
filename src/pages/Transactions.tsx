@@ -74,7 +74,7 @@ export default function Transactions() {
 
     setIsLoading(true);
     try {
-      const { data, error } = await getUserTransactions(publicKey.toString());
+      const { data } = await getUserTransactions(publicKey.toString());
       if (data) {
         setTransactions(data);
       }

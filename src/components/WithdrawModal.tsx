@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Copy, CheckCircle, ExternalLink, AlertCircle, Wallet } from 'lucide-react';
+import { X, CheckCircle, AlertCircle, Wallet } from 'lucide-react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js';
-import { getAssociatedTokenAddress, createTransferInstruction, TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { createTransaction } from '../services/api';
-import { getPlatformBalance, debitWithdrawal, getAvailableBalance } from '../services/platformBalance';
+import { Connection, PublicKey } from '@solana/web3.js';
+import { createTransaction, getUserProfile } from '../services/api';
+import { debitWithdrawal, getAvailableBalance } from '../services/platformBalance';
 
 interface WithdrawModalProps {
   isOpen: boolean;
@@ -15,16 +14,8 @@ interface WithdrawModalProps {
 
 type TokenType = 'SOL' | 'USDC' | 'USDT';
 
-// Platform wallet that holds the deposited funds
-const PLATFORM_WALLET = '4Tnb3urg7TEDj9t8Evzjzoid1KYyfBRJFSSdHSujMd9h'; // Platform deposit wallet
-
-const TOKEN_ADDRESSES = {
-  USDC: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', // USDC mainnet
-  USDT: 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB', // USDT mainnet
-};
-
 export default function WithdrawModal({ isOpen, onClose, onSuccess }: WithdrawModalProps) {
-  const { publicKey, sendTransaction, connected } = useWallet();
+  const { publicKey, connected } = useWallet();
   const [selectedToken, setSelectedToken] = useState<TokenType>('SOL');
   const [amount, setAmount] = useState('');
   const [withdrawAddress, setWithdrawAddress] = useState('');
@@ -108,7 +99,7 @@ export default function WithdrawModal({ isOpen, onClose, onSuccess }: WithdrawMo
 
     try {
       const SOLANA_RPC = import.meta.env.VITE_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com';
-      const connection = new Connection(SOLANA_RPC, 'confirmed');
+      new Connection(SOLANA_RPC, 'confirmed');
 
       // Debit the withdrawal amount from platform balance
       const { error: balanceError } = await debitWithdrawal(
@@ -123,14 +114,23 @@ export default function WithdrawModal({ isOpen, onClose, onSuccess }: WithdrawMo
 
       console.log('Platform balance debited successfully');
 
+      // Get user profile for user_id
+      const { data: userProfile } = await getUserProfile(publicKey.toString());
+
+      if (!userProfile) {
+        console.error('User profile not found');
+        throw new Error('User profile not found. Please complete your profile first.');
+      }
+
       // Save withdrawal request to database
       const { error: dbError } = await createTransaction({
-        walletAddress: publicKey.toString(),
-        type: 'withdrawal',
+        user_id: userProfile.id,
+        wallet_address: publicKey.toString(),
+        type: 'withdraw',
         amount: parseFloat(amount),
         currency: selectedToken,
         status: 'pending',
-        txHash: null, // Will be updated when platform processes the withdrawal
+        // transaction_hash will be updated when platform processes the withdrawal
       });
 
       if (dbError) {
